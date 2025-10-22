@@ -1,12 +1,8 @@
-import {CreateTabProps, ShowTabProps, UpdateBoundingBoxProps} from "../../support/types/browserTypes";
+import {CreateTabProps, ChangeTabProps, SetBoundingBoxProps, BrowserApi} from "../../support/ipc/browserTypes";
 
 declare global {
     interface Window {
-        browser: {
-            createTab(props: CreateTabProps): Promise<number>;
-            showTab(props: ShowTabProps): Promise<number>
-            setBoundingBox(props: UpdateBoundingBoxProps): void;
-        };
+        browser: BrowserApi;
     }
 }
 
@@ -14,10 +10,10 @@ export async function createTab(props: CreateTabProps) {
     return await window.browser.createTab(props);
 }
 
-export async function showTab(props: ShowTabProps) {
-    return await window.browser.showTab(props);
+export async function showTab(props: ChangeTabProps) {
+    return await window.browser.changeTab(props);
 }
 
-export function setBoundingBox(props: UpdateBoundingBoxProps) {
+export function setBoundingBox(props: SetBoundingBoxProps) {
     window.browser.setBoundingBox(props);
 }

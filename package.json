@@ -39,8 +39,11 @@
     "@electron-forge/plugin-base": "^7.10.2",
     "@vitejs/plugin-react": "^5.0.4",
     "electron-squirrel-startup": "^1.0.1",
+    "inversify": "^7.10.3",
     "pino": "^10.1.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "reflect-metadata": "^0.2.2",
+    "uuid": "^13.0.0"
   }
 }

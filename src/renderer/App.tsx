@@ -1,18 +1,19 @@
 import "./styles/index.css"
 import {RefObject, useEffect, useRef, useState} from "react";
 import {createTab, setBoundingBox, showTab} from "./electronApi/browserApi";
+import {TabId} from "../support/entities/ITab";
 
 export function App() {
     const browserRef = useRef<HTMLDivElement>(null)
-    const [tabs, setTabs] = useState<number[]>([])
-    const [activeTab, setActiveTab] = useState<number|null>(null)
+    const [tabs, setTabs] = useState<TabId[]>([])
+    const [activeTab, setActiveTab] = useState<TabId|null>(null)
 
     const handleCreateTab = async () => {
-        const tabId = await createTab({
+        const {id} = await createTab({
             url: 'https://www.google.com'
         })
-        setTabs([...tabs, tabId])
-        handleShowTab(tabId)
+        setTabs([...tabs, id])
+        handleShowTab(id)
     }
 
     const handleUpdateBBox = () => {
@@ -24,9 +25,14 @@ export function App() {
         }
     }
 
-    const handleShowTab = (tabId:number) => {
-        setActiveTab(tabId)
-        showTab({id:tabId})
+    const handleShowTab = async(tabId:TabId) => {
+        const res = await showTab({id:tabId})
+        if(!res.tab){
+            alert("impossible show tab")
+        }
+        else{
+            setActiveTab(res.tab.id)
+        }
     }
 
     useEffect(() => {
